@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { GetStaticProps } from 'next';
 import { api, responseMovies } from 'services';
 import Head from 'next/head';
@@ -6,7 +7,26 @@ import styles from '@/styles/app.module.scss';
 type Data = {
     data: responseMovies;
 };
+
 export default function Home({ data }: Data) {
+    const [page, setPage] = useState<number>(1);
+    const [min, setMin] = useState<number>(0);
+    const [max, setMax] = useState<number>(4);
+    const handlePagination = (index: number) => {
+        let show = false;
+        switch (page % 4) {
+            case 0:
+                if (0 <= index && index < 5) show = true;
+            case 0:
+                if (0 <= index && index < 5) show = true;
+            case 0:
+                if (0 <= index && index < 5) show = true;
+            case 0:
+                if (0 <= index && index < 5) show = true;
+        }
+        return show;
+    };
+    useEffect(() => {}, [page]);
     return (
         <div className={styles.homepage}>
             <Head>
@@ -18,19 +38,36 @@ export default function Home({ data }: Data) {
                     <input className={styles.searchBar} type="text" />
                 </div>
                 {/* <p>{JSON.stringify(data)}</p> */}
-                {data.results.map(movie => (
-                    <a>{movie.original_title}</a>
-                ))}
-                <ul className={styles.movieList}>
-                    <li className={styles.movieCard}>Filme 1</li>
-                </ul>
+                <section className={styles.movieList}>
+                    {data.results.map((movie, index) => (
+                        <>
+                            {index >= min && index <= max && (
+                                <div className={styles.movieCard}>
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                        alt={movie.title}
+                                        height="200px"
+                                    ></img>
+                                    <div>
+                                        <div className={styles.titleContainer}>
+                                            <h2 className={styles.movieTitle}>
+                                                {movie.title}
+                                            </h2>
+                                        </div>
+                                        <p>{movie.overview}</p>
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    ))}
+                </section>
             </div>
         </div>
     );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const { data } = await api.get(`movie/popular?`);
+    const { data } = await api.get(`movie/popular?&language=pt-BR`);
 
     // const episode = {
     //   id: data.id,
@@ -40,6 +77,6 @@ export const getStaticProps: GetStaticProps = async () => {
         props: {
             data,
         },
-        revalidate: 60 * 60 * 24, // 24 hours
+        // revalidate: 60 * 60 * 24, // 24 hours
     };
 };
