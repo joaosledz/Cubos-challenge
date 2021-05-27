@@ -1,7 +1,12 @@
+import { GetStaticProps } from 'next';
+import { api, responseMovies } from 'services';
 import Head from 'next/head';
 import styles from '@/styles/app.module.scss';
 
-export default function Home() {
+type Data = {
+    data: responseMovies;
+};
+export default function Home({ data }: Data) {
     return (
         <div className={styles.homepage}>
             <Head>
@@ -12,6 +17,10 @@ export default function Home() {
                 <div className={styles.searchBarContainer}>
                     <input className={styles.searchBar} type="text" />
                 </div>
+                {/* <p>{JSON.stringify(data)}</p> */}
+                {data.results.map(movie => (
+                    <a>{movie.original_title}</a>
+                ))}
                 <ul className={styles.movieList}>
                     <li className={styles.movieCard}>Filme 1</li>
                 </ul>
@@ -19,3 +28,20 @@ export default function Home() {
         </div>
     );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+    const { data } = await api.get(
+        `movie/popular?api_key=39ab850aa935d24cac807e720e592629`
+    );
+
+    // const episode = {
+    //   id: data.id,
+    // }
+
+    return {
+        props: {
+            data,
+        },
+        revalidate: 60 * 60 * 24, // 24 hours
+    };
+};
