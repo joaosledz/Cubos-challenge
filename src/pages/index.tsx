@@ -8,9 +8,14 @@ export default function Home() {
                 <title>Cinemundo</title>
                 <link rel="icon" href="/movie.png" />
             </Head>
-            <section className={styles.content}>
-                <input type="text" />
-            </section>
+            <div className={styles.content}>
+                <div className={styles.searchBarContainer}>
+                    <input className={styles.searchBar} type="text" />
+                </div>
+                <ul className={styles.movieList}>
+                    <li className={styles.movieCard}>Filme 1</li>
+                </ul>
+            </div>
         </div>
     );
 }

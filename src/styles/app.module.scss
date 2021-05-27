@@ -1,10 +1,35 @@
-.root {
-}
 .main {
     flex: 1;
 }
 
 .content {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    background-color: grey;
+    height: 80vh;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 3rem;
 }
+
+.searchBarContainer {
+    display: flex;
+    justify-content: center;
+    // width: 100vw;
+}
+
+.movieList {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+.flexContainer {
+    display: flex;
+    flex-direction: column;
+    // width: 100vw;
+}
+
+// .flexItem{
+
+// }
