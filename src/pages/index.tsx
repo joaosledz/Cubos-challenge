@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { GetStaticProps } from 'next';
 import { api, responseMovies } from 'services';
+import Link from 'next/link';
 import Head from 'next/head';
 import styles from '@/styles/app.module.scss';
 
@@ -17,11 +18,11 @@ export default function Home({ data }: Data) {
         switch (page % 4) {
             case 0:
                 if (0 <= index && index < 5) show = true;
-            case 0:
+            case 1:
                 if (0 <= index && index < 5) show = true;
-            case 0:
+            case 2:
                 if (0 <= index && index < 5) show = true;
-            case 0:
+            case 3:
                 if (0 <= index && index < 5) show = true;
         }
         return show;
@@ -43,11 +44,12 @@ export default function Home({ data }: Data) {
                         <>
                             {index >= min && index <= max && (
                                 <div className={styles.movieCard}>
-                                    <img
-                                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                        alt={movie.title}
-                                        height="200px"
-                                    ></img>
+                                    <Link href={`/${movie.id}`}>
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
+                                            alt={movie.title}
+                                        />
+                                    </Link>
                                     <div>
                                         <div className={styles.titleContainer}>
                                             <h2 className={styles.movieTitle}>
@@ -77,6 +79,6 @@ export const getStaticProps: GetStaticProps = async () => {
         props: {
             data,
         },
-        // revalidate: 60 * 60 * 24, // 24 hours
+        // revalidate: 60 * 60 * 2, // 2 hours
     };
 };
