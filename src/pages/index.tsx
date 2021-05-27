@@ -1,67 +1,82 @@
+import { useState, useEffect } from 'react';
+import { GetStaticProps } from 'next';
+import { api, responseMovies } from 'services';
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import styles from '@/styles/app.module.scss';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+type Data = {
+    data: responseMovies;
+};
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{` `}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <p className={styles.description}>This is not an official starter!</p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=typescript-nextjs-starter"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+export default function Home({ data }: Data) {
+    const [page, setPage] = useState<number>(1);
+    const [min, setMin] = useState<number>(0);
+    const [max, setMax] = useState<number>(4);
+    const handlePagination = (index: number) => {
+        let show = false;
+        switch (page % 4) {
+            case 0:
+                if (0 <= index && index < 5) show = true;
+            case 0:
+                if (0 <= index && index < 5) show = true;
+            case 0:
+                if (0 <= index && index < 5) show = true;
+            case 0:
+                if (0 <= index && index < 5) show = true;
+        }
+        return show;
+    };
+    useEffect(() => {}, [page]);
+    return (
+        <div className={styles.homepage}>
+            <Head>
+                <title>Cinemundo</title>
+                <link rel="icon" href="/movie.png" />
+            </Head>
+            <div className={styles.content}>
+                <div className={styles.searchBarContainer}>
+                    <input className={styles.searchBar} type="text" />
+                </div>
+                {/* <p>{JSON.stringify(data)}</p> */}
+                <section className={styles.movieList}>
+                    {data.results.map((movie, index) => (
+                        <>
+                            {index >= min && index <= max && (
+                                <div className={styles.movieCard}>
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                        alt={movie.title}
+                                        height="200px"
+                                    ></img>
+                                    <div>
+                                        <div className={styles.titleContainer}>
+                                            <h2 className={styles.movieTitle}>
+                                                {movie.title}
+                                            </h2>
+                                        </div>
+                                        <p>{movie.overview}</p>
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    ))}
+                </section>
+            </div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=typescript-nextjs-starter"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{` `}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  );
+    );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+    const { data } = await api.get(`movie/popular?&language=pt-BR`);
+
+    // const episode = {
+    //   id: data.id,
+    // }
+
+    return {
+        props: {
+            data,
+        },
+        // revalidate: 60 * 60 * 24, // 24 hours
+    };
+};

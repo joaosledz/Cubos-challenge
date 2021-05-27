@@ -1,0 +1,56 @@
+.main {
+    flex: 1;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: grey;
+    height: 80vh;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 3rem;
+}
+
+.searchBarContainer {
+    display: flex;
+    justify-content: center;
+    // width: 100vw;
+}
+
+.movieList {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+.movieCard {
+    width: 70vw;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 2rem;
+    background-color: var(--card-bg);
+    img {
+        width: '20%';
+    }
+    .titleContainer {
+        background-color: var(--primary);
+        width: 100%;
+        height: 3rem;
+    }
+    h2 {
+        font-family: 'lato';
+        color: var(--secondary);
+    }
+}
+
+.flexContainer {
+    display: flex;
+    flex-direction: column;
+    // width: 100vw;
+}
+
+// .flexItem{
+
+// }
