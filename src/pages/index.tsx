@@ -30,9 +30,7 @@ export default function Home({ data }: Data) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const { data } = await api.get(
-        `movie/popular?api_key=39ab850aa935d24cac807e720e592629`
-    );
+    const { data } = await api.get(`movie/popular?`);
 
     // const episode = {
     //   id: data.id,
