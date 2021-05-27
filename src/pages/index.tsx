@@ -13,21 +13,31 @@ export default function Home({ data }: Data) {
     const [page, setPage] = useState<number>(1);
     const [min, setMin] = useState<number>(0);
     const [max, setMax] = useState<number>(4);
-    const handlePagination = (index: number) => {
-        let show = false;
-        switch (page % 4) {
-            case 0:
-                if (0 <= index && index < 5) show = true;
-            case 1:
-                if (0 <= index && index < 5) show = true;
-            case 2:
-                if (0 <= index && index < 5) show = true;
-            case 3:
-                if (0 <= index && index < 5) show = true;
+    const pages = [1, 2, 3, 4, 5];
+    const handlePagination = () => {
+        const aux = page % 4;
+        console.log(aux);
+        if (aux == 0) {
+            setMin(15);
+            setMax(19);
+        } else if (aux == 1) {
+            setMin(0);
+            setMax(4);
+        } else if (aux == 2) {
+            setMin(5);
+            setMax(9);
+        } else if (aux == 3) {
+            setMin(10);
+            setMax(14);
         }
-        return show;
     };
-    useEffect(() => {}, [page]);
+    useEffect(() => {
+        handlePagination();
+        console.log('page:', page);
+    }, [page]);
+    useEffect(() => {
+        console.log(min, max);
+    }, [min, max]);
     return (
         <div className={styles.homepage}>
             <Head>
@@ -63,6 +73,20 @@ export default function Home({ data }: Data) {
                         </>
                     ))}
                 </section>
+                <div className={styles.paginationContainer}>
+                    {pages.map(value => (
+                        <div
+                            className={
+                                value === page
+                                    ? styles.pageSelected
+                                    : styles.pageNumber
+                            }
+                            onClick={() => setPage(value)}
+                        >
+                            {value}
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
