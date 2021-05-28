@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GetStaticProps } from 'next';
-import { api, responseMovies, movieApi, Movie } from 'services';
+import { api, responseMovies, movieApi, Movie, Genre } from 'services';
 import Link from 'next/link';
 import Head from 'next/head';
 import styles from '@/styles/app.module.scss';
@@ -8,8 +8,13 @@ import styles from '@/styles/app.module.scss';
 type Data = {
     data: responseMovies;
 };
+type genresData = {
+    genres: Genre[];
+};
 
-export default function Home({ data }: Data) {
+export default function Home({ data }: Data, { genres }: genresData) {
+    console.log(genres);
+    console.log(data);
     const [movies, setMovies] = useState<Movie[]>(data.results);
     const [page, setPage] = useState<number>(1);
     const [min, setMin] = useState<number>(0);
@@ -53,9 +58,9 @@ export default function Home({ data }: Data) {
         handlePagination();
         // console.log('page:', page);
     }, [page]);
-    useEffect(() => {
-        // console.log(min, max);
-    }, [min, max]);
+    // useEffect(() => {
+    //     console.log(movies);
+    // }, [movies]);
     return (
         <div className={styles.homepage}>
             <Head>
@@ -63,7 +68,6 @@ export default function Home({ data }: Data) {
                 <link rel="icon" href="/movie.png" />
             </Head>
             <div className={styles.content}>
-                {/* <div className={styles.searchBarContainer}> */}
                 <input
                     className={styles.searchBar}
                     type="text"
@@ -72,7 +76,6 @@ export default function Home({ data }: Data) {
                     onChange={e => setQuery(e.target.value)}
                     onKeyPress={e => handleKeyPress(e.key)}
                 />
-                {/* </div> */}
                 <section className={styles.movieList}>
                     {movies.map((movie, index) => (
                         <>
@@ -90,7 +93,32 @@ export default function Home({ data }: Data) {
                                                 {movie.title}
                                             </h2>
                                         </div>
-                                        <p>{movie.overview}</p>
+                                        <div className={styles.score}>
+                                            {movie.vote_average * 10}%
+                                        </div>
+                                        <div
+                                            className={styles.overviewAndGenres}
+                                        >
+                                            <p>{movie.overview}</p>
+                                            <div
+                                                className={
+                                                    styles.genresContainer
+                                                }
+                                            >
+                                                {movie.genre_ids &&
+                                                    movie.genre_ids.map(
+                                                        genre_id => (
+                                                            <div
+                                                                className={
+                                                                    styles.genre
+                                                                }
+                                                            >
+                                                                {genre_id}
+                                                            </div>
+                                                        )
+                                                    )}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -118,14 +146,12 @@ export default function Home({ data }: Data) {
 
 export const getStaticProps: GetStaticProps = async () => {
     const { data } = await api.get(`movie/popular?&language=pt-BR`);
-
-    // const episode = {
-    //   id: data.id,
-    // }
+    const response = await movieApi.genres();
 
     return {
         props: {
             data,
+            genres: response.data.genres,
         },
         // revalidate: 60 * 60 * 2, // 2 hours
     };

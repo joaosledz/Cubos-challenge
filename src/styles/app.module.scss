@@ -5,6 +5,18 @@
     flex: 1;
 }
 
+.homepage {
+    padding: 0 4rem;
+    height: calc(100vh - 7.5rem);
+    overflow-y: scroll;
+    width: 100vw;
+
+    // h2 {
+    //     margin-top: 3rem;
+    //     margin-bottom: 1.5rem;
+    // }
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -13,7 +25,8 @@
     min-height: 80vh;
     justify-content: flex-start;
     align-items: center;
-    padding: 3rem;
+    padding: 4rem;
+    // width: 100vw;
 }
 
 .searchBarContainer {
@@ -30,6 +43,7 @@
 }
 
 .movieCard {
+    position: relative;
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -40,22 +54,63 @@
         width: 22%;
     }
     .titleContainer {
+        display: flex;
+        align-items: flex-end;
         background-color: var(--primary);
         width: 100%;
-        height: 3rem;
+        height: 20%;
     }
     h2 {
+        padding-bottom: 5px;
+        align-self: flex-end;
+        padding-left: 13%;
+        font-size: 3rem;
         font-family: 'lato';
+        font-weight: 400;
         color: var(--secondary);
+    }
+    .overviewAndGenres {
+        // height: 100%;
+        padding-top: 10%;
+        padding-left: 5%;
+        padding-right: 5%;
+        p {
+            font-size: 1.4rem;
+            font-family: lato;
+            color: grey;
+        }
+        .genresContainer {
+            // height: 100%;
+            display: flex;
+            align-content: flex-end;
+            gap: 1rem;
+        }
+    }
+    .score {
+        position: absolute;
+        top: 10%;
+        left: 24%;
+        text-align: center;
+        padding: 1rem 0;
+        font-size: 1.7rem;
+        font-family: lato;
+        font-weight: 500;
+
+        color: var(--secondary);
+        background-color: var(--primary);
+        border-radius: 50%;
+        border: 3.5px solid var(--secondary);
+
+        -webkit-box-shadow: 0px 0px 0px 3px var(--primary);
+        -moz-box-shadow: 0px 0px 0px 3px var(--primary);
+        box-shadow: 0px 0px 0px 3px var(--primary);
+
+        width: 4.7rem;
+        height: 4.7rem;
     }
 }
 
 .flexContainer {
     display: flex;
     flex-direction: column;
-    // width: 100vw;
 }
-
-// .flexItem{
-
-// }
