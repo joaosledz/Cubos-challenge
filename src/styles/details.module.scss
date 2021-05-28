@@ -1,0 +1,58 @@
+.homepage {
+    height: calc(100vh - 7.5rem);
+    overflow-y: scroll;
+    position: relative;
+}
+.titleContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--dark-grey);
+    height: 5rem;
+    h2 {
+        padding-bottom: 4px;
+        padding-left: 3%;
+        font-size: 3rem;
+        font-family: 'Lato';
+        font-weight: 400;
+        color: var(--primary);
+    }
+    a {
+        font-size: 1.5rem;
+        color: grey;
+        padding-right: 1rem;
+    }
+}
+
+.genresContainer {
+    position: absolute;
+    bottom: 2rem;
+    // height: 100%;
+    display: flex;
+    align-content: flex-end;
+    gap: 1rem;
+}
+.genre {
+    background-color: white;
+    border-radius: 3rem;
+    padding: 0.3rem 0.6rem;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    cursor: pointer;
+}
+
+.descriptionContainer {
+    width: 100%;
+    background-color: var(--card-bg);
+    padding: 4.5%;
+}
+.descriptionAndImage {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    margin-bottom: 5rem;
+    img {
+        height: 100%;
+    }
+}

@@ -1,7 +1,8 @@
 export type Movie = {
     adult: boolean;
     backdrop_path: string;
-    genre_ids: number[];
+    genre_ids?: number[];
+    genres?: Genre[];
     id: number;
     original_language: string;
     original_title: string;
