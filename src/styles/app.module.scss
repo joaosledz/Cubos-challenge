@@ -6,7 +6,7 @@
 }
 
 .homepage {
-    padding: 0 4rem;
+    padding: 0 5%;
     height: calc(100vh - 7.5rem);
     overflow-y: scroll;
     width: 100vw;
@@ -21,7 +21,7 @@
     min-height: 80vh;
     justify-content: flex-start;
     align-items: center;
-    padding: 4rem;
+    padding: 3%;
     // width: 100vw;
 }
 
@@ -46,6 +46,9 @@
     justify-content: flex-start;
     margin-top: 2rem;
     background-color: var(--card-bg);
+    .rightCard {
+        width: 100%;
+    }
     img {
         cursor: pointer;
         width: 22%;
@@ -54,7 +57,7 @@
         display: flex;
         align-items: flex-end;
         background-color: var(--primary);
-        width: 100%;
+        min-width: 100%;
         height: 20%;
     }
     h2 {
@@ -79,7 +82,7 @@
         a {
             position: absolute;
             top: 0.6rem;
-            left: 8rem;
+            left: 13%;
             font-size: 1.6rem;
             font-family: lato;
             color: grey;
@@ -91,8 +94,10 @@
             color: grey;
         }
         .genresContainer {
-            position: absolute;
-            bottom: 2rem;
+            // position: absolute;
+            // bottom: 2rem;
+            padding: 1rem 0;
+            justify-self: flex-end;
             // height: 100%;
             display: flex;
             align-content: flex-end;
@@ -134,4 +139,52 @@
 .flexContainer {
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 800px) {
+    .movieCard {
+        img {
+            display: none;
+        }
+    }
+    .titleContainer {
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+    .score {
+        left: 3% !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .titleContainer {
+        h2 {
+            padding-left: 4%;
+            font-size: 2.2rem;
+        }
+    }
+    .overviewAndGenres {
+        a {
+            left: 4% !important;
+        }
+    }
+    .score {
+        left: auto !important;
+        right: 3% !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .titleContainer {
+        height: max-content !important;
+        h2 {
+            font-size: 1.8rem;
+        }
+    }
+    .score {
+        width: 3.5rem !important;
+        height: 3.5rem !important;
+        font-size: 1rem !important;
+    }
 }
