@@ -119,6 +119,46 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
     useEffect(() => {
         getGenresList();
     }, []);
+
+    const Card = (movie: Movie) => {
+        return (
+            <div className={styles.movieCard}>
+                <Link href={`/${movie.id}`}>
+                    <img
+                        src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
+                        alt={movie.title}
+                    />
+                </Link>
+                <div>
+                    <div className={styles.titleContainer}>
+                        <h2 className={styles.movieTitle}>{movie.title}</h2>
+                    </div>
+                    <div className={styles.score}>
+                        {movie.vote_average * 10}%
+                    </div>
+                    <div className={styles.overviewAndGenres}>
+                        <a>{dateToLocale(movie.release_date)}</a>
+                        <p>{movie.overview}</p>
+                        <div className={styles.genresContainer}>
+                            {genres &&
+                                movie.genre_ids &&
+                                movie.genre_ids.map(genre_id => (
+                                    <div
+                                        className={styles.genre}
+                                        onClick={() =>
+                                            getMoviesByGenre(genre_id)
+                                        }
+                                    >
+                                        {genres[genre_id]}
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div className={styles.homepage}>
             <Head>
@@ -138,62 +178,7 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
                     {movies.map((movie, index) => (
                         <>
                             {index >= min && index <= max && (
-                                <div className={styles.movieCard}>
-                                    <Link href={`/${movie.id}`}>
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
-                                            alt={movie.title}
-                                        />
-                                    </Link>
-                                    <div>
-                                        <div className={styles.titleContainer}>
-                                            <h2 className={styles.movieTitle}>
-                                                {movie.title}
-                                            </h2>
-                                        </div>
-                                        <div className={styles.score}>
-                                            {movie.vote_average * 10}%
-                                        </div>
-                                        <div
-                                            className={styles.overviewAndGenres}
-                                        >
-                                            <a>
-                                                {dateToLocale(
-                                                    movie.release_date
-                                                )}
-                                            </a>
-                                            <p>{movie.overview}</p>
-                                            <div
-                                                className={
-                                                    styles.genresContainer
-                                                }
-                                            >
-                                                {genres &&
-                                                    movie.genre_ids &&
-                                                    movie.genre_ids.map(
-                                                        genre_id => (
-                                                            <div
-                                                                className={
-                                                                    styles.genre
-                                                                }
-                                                                onClick={() =>
-                                                                    getMoviesByGenre(
-                                                                        genre_id
-                                                                    )
-                                                                }
-                                                            >
-                                                                {
-                                                                    genres[
-                                                                        genre_id
-                                                                    ]
-                                                                }
-                                                            </div>
-                                                        )
-                                                    )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <Card {...movie} />
                             )}
                         </>
                     ))}
