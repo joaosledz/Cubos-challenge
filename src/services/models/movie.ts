@@ -14,6 +14,17 @@ export type Movie = {
     video: boolean;
     vote_average: number;
     vote_count: number;
+    status: string;
+    runtime: number;
+    spoken_languages: language[];
+    budget: number;
+    revenue: number;
+};
+
+export type language = {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
 };
 
 export type Genre = {

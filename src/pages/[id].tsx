@@ -10,6 +10,13 @@ type MovieData = {
 // type VideoData = {
 //     videos: Video[];
 // };
+
+const timeCalculator = (runtime: number) => {
+    const hour = Math.floor(runtime / 60);
+    const minutes = runtime % 60;
+    return `${hour}h ${minutes}min`;
+};
+
 export default function Home(
     { movie }: MovieData /* , { videos }: VideoData*/
 ) {
@@ -37,11 +44,38 @@ export default function Home(
                 <div className={styles.descriptionContainer}>
                     <div className={styles.sinopse}>
                         <h3>Sinopse</h3>
+                        <hr />
                         <p>{movie.overview}</p>
                     </div>
                     <div className={styles.informationContainer}>
                         <h3>Informações</h3>
-                        <div></div>
+                        <hr />
+                        <div className={styles.informationDetails}>
+                            <div>
+                                <h4> Situação</h4>
+                                <a>{movie.status}</a>
+                            </div>
+                            <div>
+                                <h4> Idioma</h4>
+                                <a>{movie.spoken_languages[0].name}</a>
+                            </div>
+                            <div>
+                                <h4> Duração</h4>
+                                <a>{timeCalculator(movie.runtime)}</a>
+                            </div>
+                            <div>
+                                <h4> Orçamento</h4>
+                                <a>${movie.budget}</a>
+                            </div>
+                            <div>
+                                <h4> Receita</h4>
+                                <a>${movie.revenue}</a>
+                            </div>
+                            <div>
+                                <h4> Lucro</h4>
+                                <a>${movie.revenue - movie.budget}</a>
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.genresContainer}>
                         {movie.genres &&
