@@ -10,8 +10,10 @@ const movieApi = {
     search: (query: string) =>
         api.get(`search/movie?query=${query}&${language}`),
     genres: () => api.get(`genre/movie/list?${language}`),
-    discover: (genreId: number | string) =>
+    discoverGenre: (genreId: number | string) =>
         api.get(`discover/movie?with_genres=${genreId}&${language}`),
+    discoverYear: (year: number | string) =>
+        api.get(`discover/movie?year=${year}&${language}`),
 };
 
 export default movieApi;

@@ -39,7 +39,13 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
             setMax(14);
         }
     };
-
+    const dateToLocale = (oldDate: string) => {
+        const aux = oldDate.split('-');
+        return `${aux[2]}/${aux[1]}/${aux[0]}`;
+    };
+    const isYear = (str: string) => {
+        return /^[1|2][0-9]{3}/.test(str);
+    };
     const getMoviesByTitle = async () => {
         movieApi
             .search(query)
@@ -55,11 +61,21 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
 
     const getMoviesByGenre = (genreId: string | number) => {
         movieApi
-            .discover(genreId)
+            .discoverGenre(genreId)
             .then(response => {
                 setMovies(response.data.results);
                 setPage(1);
                 setQuery(genres![genreId]);
+            })
+            .catch(err => console.log(err));
+    };
+    const getMoviesByYear = (year: string | number) => {
+        movieApi
+            .discoverYear(year)
+            .then(response => {
+                console.log(response.data);
+                setMovies(response.data.results);
+                setPage(1);
             })
             .catch(err => console.log(err));
     };
@@ -78,7 +94,8 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
             });
     };
     const handleSearch = () => {
-        if (genres) {
+        if (isYear(query)) getMoviesByYear(query);
+        else if (genres) {
             Object.entries(genres).forEach(genre => {
                 if (
                     genre[1].toLocaleLowerCase() === query.toLocaleLowerCase()
@@ -140,6 +157,11 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
                                         <div
                                             className={styles.overviewAndGenres}
                                         >
+                                            <a>
+                                                {dateToLocale(
+                                                    movie.release_date
+                                                )}
+                                            </a>
                                             <p>{movie.overview}</p>
                                             <div
                                                 className={
