@@ -8,14 +8,16 @@ import styles from '@/styles/app.module.scss';
 type Data = {
     data: responseMovies;
 };
-type genresData = {
-    genres: Genre[];
+// type genresData = {
+//     genres: Genre[];
+// };
+export type AllGenres = {
+    [key: string]: string;
 };
-
-export default function Home({ data }: Data, { genres }: genresData) {
-    console.log(genres);
-    console.log(data);
+export default function Home({ data }: Data /*, { genres }: genresData*/) {
+    // console.log(genres);
     const [movies, setMovies] = useState<Movie[]>(data.results);
+    const [genres, setGenres] = useState<AllGenres>();
     const [page, setPage] = useState<number>(1);
     const [min, setMin] = useState<number>(0);
     const [max, setMax] = useState<number>(4);
@@ -49,6 +51,21 @@ export default function Home({ data }: Data, { genres }: genresData) {
             });
     };
 
+    const getGenresList = async () => {
+        movieApi
+            .genres()
+            .then(response => {
+                let genres = {};
+                response.data.genres.forEach((genre: Genre) => {
+                    genres = { ...genres, [genre.id]: genre.name };
+                });
+                setGenres(genres);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
     const handleKeyPress = (key: string) => {
         if (key === 'Enter') {
             getMovieList();
@@ -58,9 +75,9 @@ export default function Home({ data }: Data, { genres }: genresData) {
         handlePagination();
         // console.log('page:', page);
     }, [page]);
-    // useEffect(() => {
-    //     console.log(movies);
-    // }, [movies]);
+    useEffect(() => {
+        getGenresList();
+    }, []);
     return (
         <div className={styles.homepage}>
             <Head>
@@ -105,7 +122,8 @@ export default function Home({ data }: Data, { genres }: genresData) {
                                                     styles.genresContainer
                                                 }
                                             >
-                                                {movie.genre_ids &&
+                                                {genres &&
+                                                    movie.genre_ids &&
                                                     movie.genre_ids.map(
                                                         genre_id => (
                                                             <div
@@ -113,7 +131,11 @@ export default function Home({ data }: Data, { genres }: genresData) {
                                                                     styles.genre
                                                                 }
                                                             >
-                                                                {genre_id}
+                                                                {
+                                                                    genres[
+                                                                        genre_id
+                                                                    ]
+                                                                }
                                                             </div>
                                                         )
                                                     )}
@@ -153,6 +175,6 @@ export const getStaticProps: GetStaticProps = async () => {
             data,
             genres: response.data.genres,
         },
-        // revalidate: 60 * 60 * 2, // 2 hours
+        revalidate: 60 * 60 * 2, // 2 hours
     };
 };
