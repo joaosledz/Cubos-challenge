@@ -63,15 +63,16 @@ export default function Home({ data }: Data) {
                 <link rel="icon" href="/movie.png" />
             </Head>
             <div className={styles.content}>
-                <div className={styles.searchBarContainer}>
-                    <input
-                        className={styles.searchBar}
-                        type="text"
-                        value={query}
-                        onChange={e => setQuery(e.target.value)}
-                        onKeyPress={e => handleKeyPress(e.key)}
-                    />
-                </div>
+                {/* <div className={styles.searchBarContainer}> */}
+                <input
+                    className={styles.searchBar}
+                    type="text"
+                    placeholder="Busque um filme por nome, ano ou gênero..."
+                    value={query}
+                    onChange={e => setQuery(e.target.value)}
+                    onKeyPress={e => handleKeyPress(e.key)}
+                />
+                {/* </div> */}
                 <section className={styles.movieList}>
                     {movies.map((movie, index) => (
                         <>
