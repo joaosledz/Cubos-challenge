@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GetStaticProps } from 'next';
-import { api, responseMovies } from 'services';
+import { api, responseMovies, movieApi, Movie } from 'services';
 import Link from 'next/link';
 import Head from 'next/head';
 import styles from '@/styles/app.module.scss';
@@ -10,13 +10,14 @@ type Data = {
 };
 
 export default function Home({ data }: Data) {
+    const [movies, setMovies] = useState<Movie[]>(data.results);
     const [page, setPage] = useState<number>(1);
     const [min, setMin] = useState<number>(0);
     const [max, setMax] = useState<number>(4);
+    const [query, setQuery] = useState<string>('');
     const pages = [1, 2, 3, 4, 5];
     const handlePagination = () => {
         const aux = page % 4;
-        console.log(aux);
         if (aux == 0) {
             setMin(15);
             setMax(19);
@@ -31,12 +32,29 @@ export default function Home({ data }: Data) {
             setMax(14);
         }
     };
+
+    const getMovieList = async () => {
+        movieApi
+            .search(query)
+            .then(response => {
+                setMovies(response.data.results);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+    const handleKeyPress = (key: string) => {
+        if (key === 'Enter') {
+            getMovieList();
+        }
+    };
     useEffect(() => {
         handlePagination();
-        console.log('page:', page);
+        // console.log('page:', page);
     }, [page]);
     useEffect(() => {
-        console.log(min, max);
+        // console.log(min, max);
     }, [min, max]);
     return (
         <div className={styles.homepage}>
@@ -46,11 +64,16 @@ export default function Home({ data }: Data) {
             </Head>
             <div className={styles.content}>
                 <div className={styles.searchBarContainer}>
-                    <input className={styles.searchBar} type="text" />
+                    <input
+                        className={styles.searchBar}
+                        type="text"
+                        value={query}
+                        onChange={e => setQuery(e.target.value)}
+                        onKeyPress={e => handleKeyPress(e.key)}
+                    />
                 </div>
-                {/* <p>{JSON.stringify(data)}</p> */}
                 <section className={styles.movieList}>
-                    {data.results.map((movie, index) => (
+                    {movies.map((movie, index) => (
                         <>
                             {index >= min && index <= max && (
                                 <div className={styles.movieCard}>
