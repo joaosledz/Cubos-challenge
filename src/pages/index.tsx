@@ -40,17 +40,29 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
         }
     };
 
-    const getMovieList = async () => {
+    const getMoviesByTitle = async () => {
         movieApi
             .search(query)
             .then(response => {
                 setMovies(response.data.results);
+                setPage(1);
+                setQuery('');
             })
             .catch(err => {
                 console.log(err);
             });
     };
 
+    const getMoviesByGenre = (genreId: string | number) => {
+        movieApi
+            .discover(genreId)
+            .then(response => {
+                setMovies(response.data.results);
+                setPage(1);
+                setQuery(genres![genreId]);
+            })
+            .catch(err => console.log(err));
+    };
     const getGenresList = async () => {
         movieApi
             .genres()
@@ -65,10 +77,22 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
                 console.log(err);
             });
     };
-
+    const handleSearch = () => {
+        if (genres) {
+            Object.entries(genres).forEach(genre => {
+                if (
+                    genre[1].toLocaleLowerCase() === query.toLocaleLowerCase()
+                ) {
+                    getMoviesByGenre(genre[0]);
+                    return;
+                }
+            });
+        } else getMoviesByTitle();
+    };
     const handleKeyPress = (key: string) => {
         if (key === 'Enter') {
-            getMovieList();
+            handleSearch();
+            getMoviesByTitle();
         }
     };
     useEffect(() => {
@@ -129,6 +153,11 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
                                                             <div
                                                                 className={
                                                                     styles.genre
+                                                                }
+                                                                onClick={() =>
+                                                                    getMoviesByGenre(
+                                                                        genre_id
+                                                                    )
                                                                 }
                                                             >
                                                                 {

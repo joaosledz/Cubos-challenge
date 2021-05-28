@@ -10,11 +10,6 @@
     height: calc(100vh - 7.5rem);
     overflow-y: scroll;
     width: 100vw;
-
-    // h2 {
-    //     margin-top: 3rem;
-    //     margin-bottom: 1.5rem;
-    // }
 }
 
 .content {
@@ -46,6 +41,7 @@
     position: relative;
     width: 100%;
     display: flex;
+    min-height: 20%;
     justify-content: flex-start;
     margin-top: 2rem;
     background-color: var(--card-bg);
@@ -61,29 +57,43 @@
         height: 20%;
     }
     h2 {
-        padding-bottom: 5px;
+        padding-bottom: 4px;
         align-self: flex-end;
         padding-left: 13%;
         font-size: 3rem;
         font-family: 'lato';
-        font-weight: 400;
+        font-weight: 300;
         color: var(--secondary);
     }
     .overviewAndGenres {
         // height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-content: space-between;
         padding-top: 10%;
         padding-left: 5%;
         padding-right: 5%;
+        padding-bottom: 10%;
         p {
             font-size: 1.4rem;
             font-family: lato;
             color: grey;
         }
         .genresContainer {
+            position: absolute;
+            bottom: 2rem;
             // height: 100%;
             display: flex;
             align-content: flex-end;
             gap: 1rem;
+        }
+        .genre {
+            background-color: white;
+            border-radius: 3rem;
+            padding: 0.3rem 0.6rem;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            cursor: pointer;
         }
     }
     .score {
