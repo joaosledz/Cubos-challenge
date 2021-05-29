@@ -3,6 +3,7 @@ import { GetStaticProps } from 'next';
 import { api, responseMovies, movieApi, Movie, Genre } from 'services';
 import Link from 'next/link';
 import Head from 'next/head';
+import { dateToLocale, isYear } from 'utils/functions';
 import styles from '@/styles/app.module.scss';
 
 type Data = {
@@ -39,13 +40,7 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
             setMax(14);
         }
     };
-    const dateToLocale = (oldDate: string) => {
-        const aux = oldDate.split('-');
-        return `${aux[2]}/${aux[1]}/${aux[0]}`;
-    };
-    const isYear = (str: string) => {
-        return /^[1|2][0-9]{3}/.test(str);
-    };
+
     const getMoviesByTitle = async () => {
         movieApi
             .search(query)
@@ -93,8 +88,9 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
                 console.log(err);
             });
     };
-    const handleSearch = () => {
-        if (isYear(query)) getMoviesByYear(query);
+    const handleSearch = async () => {
+        const year = await isYear(query);
+        if (year) getMoviesByYear(query);
         else if (genres) {
             Object.entries(genres).forEach(genre => {
                 if (

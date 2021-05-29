@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { api, responseMovies, Movie, Video, movieApi } from 'services';
+import { dateToLocale, timeCalculator, Translate } from 'utils/functions';
 // import Link from 'next/link';
 import styles from '@/styles/details.module.scss';
 
@@ -10,12 +11,6 @@ type MovieData = {
 // type VideoData = {
 //     videos: Video[];
 // };
-
-const timeCalculator = (runtime: number) => {
-    const hour = Math.floor(runtime / 60);
-    const minutes = runtime % 60;
-    return `${hour}h ${minutes}min`;
-};
 
 export default function Home(
     { movie }: MovieData /* , { videos }: VideoData*/
@@ -38,7 +33,7 @@ export default function Home(
         <div className={styles.homepage}>
             <div className={styles.titleContainer}>
                 <h2>{movie.title}</h2>
-                <a>{movie.release_date}</a>
+                <a>{dateToLocale(movie.release_date)}</a>
             </div>
             <div className={styles.imageMobileContainer}>
                 <img
@@ -60,11 +55,13 @@ export default function Home(
                         <div className={styles.informationDetails}>
                             <div>
                                 <h4> Situação</h4>
-                                <a>{movie.status}</a>
+                                <a>{Translate(movie.status)}</a>
                             </div>
                             <div>
                                 <h4> Idioma</h4>
-                                <a>{movie.spoken_languages[0].name}</a>
+                                <a>
+                                    {Translate(movie.spoken_languages[0].name)}
+                                </a>
                             </div>
                             <div>
                                 <h4> Duração</h4>
@@ -105,8 +102,6 @@ export default function Home(
                 <div className={styles.containerIframe}>
                     <iframe
                         className={styles.responsiveIframe}
-                        // width="100%"
-                        // height="100%"
                         src={`https://www.youtube.com/embed/${video.key}`}
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
