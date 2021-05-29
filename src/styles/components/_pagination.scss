@@ -1,0 +1,36 @@
+.paginationContainer {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    .pageNumber {
+        align-self: center;
+        cursor: pointer;
+        padding: 0.75rem;
+        font-size: 1.5rem;
+        color: var(--primary);
+        font-family: lato;
+        font-weight: 500;
+    }
+    .pageSelected {
+        text-align: center;
+        cursor: pointer;
+        // padding: 0.5rem;
+        font-size: 2rem;
+        font-family: lato;
+        font-weight: 500;
+
+        color: var(--secondary);
+        background-color: var(--primary);
+        border-radius: 50%;
+        border: 3.5px solid var(--secondary);
+
+        -webkit-box-shadow: 0px 0px 0px 3px var(--primary);
+        -moz-box-shadow: 0px 0px 0px 3px var(--primary);
+        box-shadow: 0px 0px 0px 3px var(--primary);
+
+        width: 3rem;
+        height: 3rem;
+    }
+}

@@ -1,9 +1,11 @@
 import styles from './styles.module.scss';
-
+import Link from 'next/link';
 export function Header() {
     return (
         <header className={styles.headerContainer}>
-            <h1>Movies</h1>
+            <Link href="/">
+                <h1>Movies</h1>
+            </Link>
         </header>
     );
 }

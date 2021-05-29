@@ -12,6 +12,7 @@
 
     --chip-bg: rgba(255, 255, 255, 255);
     --chip-border: rgba(141, 176, 198, 255);
+    --dark-grey: #e6e6e6;
 }
 
 a {
@@ -19,15 +20,21 @@ a {
     text-decoration: none;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1440px) {
     html {
-        font-size: 93.75%;
+        font-size: 85%;
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1024px) {
     html {
-        font-size: 87.5%;
+        font-size: 70%;
+    }
+}
+
+@media (max-width: 800px) {
+    html {
+        font-size: 60%;
     }
 }
 
@@ -39,7 +46,7 @@ body,
 input,
 textarea,
 button {
-    font: 500 1rem Inter, sans-serif;
+    font: 500 1rem Lato, sans-serif;
     color: var(--gray-500);
 }
 
@@ -50,7 +57,7 @@ h4,
 h5,
 h6 {
     font-weight: 600;
-    font-family: Lexend, sans-serif;
+    font-family: Lato, sans-serif;
     color: var(--gray-800);
 }
 

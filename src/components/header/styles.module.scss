@@ -1,16 +1,19 @@
 .headerContainer {
     background-color: var(--primary);
-    height: 6.5rem;
+    height: 7.5rem;
     width: 100vw;
     display: flex;
     align-items: center;
 
-    padding: 2rem 4rem;
+    // padding: 2rem 4rem;
 
     border-bottom: 1px solid var(--gray-100);
     justify-content: center;
     h1 {
+        cursor: pointer;
         font-family: 'lato';
+        font-weight: 300;
+        font-size: 3.2rem;
         color: var(--secondary);
     }
 }
