@@ -130,9 +130,11 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
                     />
                 </Link>
                 <div className={styles.rightCard}>
-                    <div className={styles.titleContainer}>
-                        <h2 className={styles.movieTitle}>{movie.title}</h2>
-                    </div>
+                    <Link href={`/${movie.id}`}>
+                        <div className={styles.titleContainer}>
+                            <h2 className={styles.movieTitle}>{movie.title}</h2>
+                        </div>
+                    </Link>
                     <div className={styles.score}>
                         {movie.vote_average * 10}%
                     </div>

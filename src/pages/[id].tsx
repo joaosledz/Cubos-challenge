@@ -40,6 +40,13 @@ export default function Home(
                 <h2>{movie.title}</h2>
                 <a>{movie.release_date}</a>
             </div>
+            <div className={styles.imageMobileContainer}>
+                <img
+                    className={styles.imageMobile}
+                    src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
+                    alt={movie.title}
+                />
+            </div>
             <div className={styles.descriptionAndImage}>
                 <div className={styles.descriptionContainer}>
                     <div className={styles.sinopse}>
@@ -83,27 +90,31 @@ export default function Home(
                                 <div className={styles.genre}>{genre.name}</div>
                             ))}
                     </div>
+                    <div className={styles.score}>
+                        {movie.vote_average * 10}%
+                    </div>
                 </div>
-                <div>
+                <div className={styles.imageContainer}>
                     <img
                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                         alt={movie.title}
                     />
                 </div>
             </div>
-            {/* <div> */}
             {video && (
-                <iframe
-                    width="100%"
-                    height="100%"
-                    src={`https://www.youtube.com/embed/${video.key}`}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="Embedded youtube"
-                />
+                <div className={styles.containerIframe}>
+                    <iframe
+                        className={styles.responsiveIframe}
+                        // width="100%"
+                        // height="100%"
+                        src={`https://www.youtube.com/embed/${video.key}`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        title="Embedded youtube"
+                    />
+                </div>
             )}
-            {/* </div> */}
         </div>
     );
 }
