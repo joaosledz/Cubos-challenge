@@ -142,11 +142,25 @@
     flex-direction: column;
 }
 
+.imageMobileContainer {
+    display: none;
+    width: 100%;
+    img {
+        width: 70%;
+    }
+}
+
 @media (max-width: 800px) {
     .movieCard {
-        img {
+        .imagePC {
             display: none;
         }
+    }
+    .imageMobileContainer {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        background-color: var(--card-bg) !important;
     }
     .titleContainer {
         h2 {
@@ -187,5 +201,6 @@
         width: 3.5rem !important;
         height: 3.5rem !important;
         font-size: 1rem !important;
+        padding: 0.7rem 0 !important;
     }
 }

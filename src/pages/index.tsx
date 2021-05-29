@@ -24,6 +24,8 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
     const [max, setMax] = useState<number>(4);
     const [query, setQuery] = useState<string>('');
     const pages = [1, 2, 3, 4, 5];
+
+    //Como essa biblioteca não permite definir o page_size tive que adaptar
     const handlePagination = () => {
         const aux = page % 4;
         if (aux == 0) {
@@ -121,6 +123,7 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
             <div className={styles.movieCard}>
                 <Link href={`/${movie.id}`}>
                     <img
+                        className={styles.imagePC}
                         src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
                         alt={movie.title}
                     />
@@ -129,6 +132,15 @@ export default function Home({ data }: Data /*, { genres }: genresData*/) {
                     <Link href={`/${movie.id}`}>
                         <div className={styles.titleContainer}>
                             <h2 className={styles.movieTitle}>{movie.title}</h2>
+                        </div>
+                    </Link>
+                    <Link href={`/${movie.id}`}>
+                        <div className={styles.imageMobileContainer}>
+                            <img
+                                className={styles.imageMobile}
+                                src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
+                                alt={movie.title}
+                            />
                         </div>
                     </Link>
                     <div className={styles.score}>
